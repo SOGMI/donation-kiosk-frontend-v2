@@ -26,6 +26,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    reset(state) {
+      state.donation.amount = null;
+      state.donation.donor = null;
+    },
     setDonorFirstName(state, firstName) {
       state.donation.donor.firstName = firstName
     },
