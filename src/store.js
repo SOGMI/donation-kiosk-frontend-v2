@@ -1,5 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import axios from 'axios'
+// import {other_vars} from './components/variables.js';
+
+
+// function getUserList(cursor) {
+//   if(cursor){
+//     axios.get(`${other_vars.apiBase}/customers/search?=cursor=${cursor}`)
+//       .then(res => {
+//         console.log(res)
+//       })
+//       .catch(err => {
+//         console.log(err)
+//       })
+//   }
+// }
 
 Vue.use(Vuex)
 
@@ -26,7 +41,6 @@ export default new Vuex.Store({
     setDonationAmount(state, amount){
       state.donation.amount = amount
     }
-
   },
   actions: {
   }

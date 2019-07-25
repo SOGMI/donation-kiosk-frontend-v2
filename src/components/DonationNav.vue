@@ -14,8 +14,7 @@
                     <div class="icon"><fa-icon icon="user" /></div>
                     <div class="text">Donor Info</div>
                 </router-link>
-                
-                <div v-else-if="!donorSet" class="process-nav-item" to="donor-info" v-bind:class="{'info-set': donorSet }">
+                <div v-else class="process-nav-item" to="donor-info" v-bind:class="{'info-set': donorSet }">
                     <div class="icon"><fa-icon icon="user" /></div>
                     <div class="text">Donor Info</div>
                 </div>
