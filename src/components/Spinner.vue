@@ -1,21 +1,20 @@
 <template>
-  <div class="spinner">
-    <div class="loading-spinner"></div>
-    <!-- <div class="item">
+    <div class="spinner">
+        <div class="loading-spinner"></div>
+        <!-- <div class="item">
             <fa-icon icon="circle-notch" class="fa-spin"/>
     </div>-->
-  </div>
+    </div>
 </template>
 
 <script>
 export default {
-    name: "Spinner"
+    name: 'Spinner'
 };
 </script>
 
-
 <style lang="scss" scoped>
-@import "../assets/styles/partials/variables.scss";
+@import '../assets/styles/partials/variables.scss';
 
 .spinner {
     position: relative;
@@ -24,7 +23,7 @@ export default {
 
 @mixin loading-spinner(
     $activeColor: $primary,
-    $selector: "&::before",
+    $selector: '&::before',
     $time: 1.2s
 ) {
     @keyframes spinner {
@@ -53,7 +52,7 @@ export default {
         border: solid 6px $grey-light;
         border-bottom-color: #{$activeColor};
         border-radius: 50%;
-        content: "";
+        content: '';
         height: 60px;
         left: 50%;
         opacity: inherit;

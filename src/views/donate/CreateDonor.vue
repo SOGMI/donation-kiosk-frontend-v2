@@ -4,14 +4,23 @@
         <div v-if="!creatingUser" class="main-content">
             <div class="container">
                 <h1 class="title">Phone number "{{ phone }}" not found</h1>
-                <h2 class="subtitle">Could you tell us a little more about yourself?</h2>
+                <h2 class="subtitle">
+                    Could you tell us a little more about yourself?
+                </h2>
                 <div class="form-wrapper">
                     <form v-on:submit.prevent="addDonor" autocomplete="off">
                         <div class="columns">
                             <div class="column">
                                 <div class="field">
                                     <div class="control has-icons-left">
-                                        <input v-model="first_name" class="input is-large" type="text" name="first-name" placeholder="First Name" required >
+                                        <input
+                                            v-model="first_name"
+                                            class="input is-large"
+                                            type="text"
+                                            name="first-name"
+                                            placeholder="First Name"
+                                            required
+                                        />
                                         <span class="icon is-left">
                                             <fa-icon icon="address-card" />
                                         </span>
@@ -21,7 +30,14 @@
                             <div class="column">
                                 <div class="field">
                                     <div class="control has-icons-left">
-                                        <input v-model="last_name" class="input is-large" type="text" name="last-name" placeholder="Last Name" required >
+                                        <input
+                                            v-model="last_name"
+                                            class="input is-large"
+                                            type="text"
+                                            name="last-name"
+                                            placeholder="Last Name"
+                                            required
+                                        />
                                         <span class="icon is-left">
                                             <fa-icon icon="address-card" />
                                         </span>
@@ -33,9 +49,16 @@
                             <div class="column">
                                 <div class="field">
                                     <div class="control has-icons-left">
-                                        <input v-model="phone" type="number" class="input is-large" name="phone-number" placeholder="Phone Number" required >
+                                        <input
+                                            v-model="phone"
+                                            type="number"
+                                            class="input is-large"
+                                            name="phone-number"
+                                            placeholder="Phone Number"
+                                            required
+                                        />
                                         <span class="icon is-left">
-                                            <fa-icon icon="phone"/>
+                                            <fa-icon icon="phone" />
                                         </span>
                                     </div>
                                 </div>
@@ -45,7 +68,14 @@
                             <div class="column">
                                 <div class="field">
                                     <div class="control has-icons-left">
-                                        <input v-model="email" type="email" class="input is-large" name="email-address" placeholder="Email Address" required >
+                                        <input
+                                            v-model="email"
+                                            type="email"
+                                            class="input is-large"
+                                            name="email-address"
+                                            placeholder="Email Address"
+                                            required
+                                        />
                                         <span class="icon is-left">
                                             <fa-icon icon="envelope" />
                                         </span>
@@ -56,27 +86,31 @@
                         <div class="columns">
                             <div class="column">
                                 <div class="field">
-                                    <button class="button is-success is-large" type="submit">Continue</button>
+                                    <button
+                                        class="button is-success is-large"
+                                        type="submit"
+                                    >
+                                        Continue
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
-        <LoadingScreen v-if="creatingUser" message="creating donor profile"/>
+        <LoadingScreen v-if="creatingUser" message="creating donor profile" />
     </div>
 </template>
 
 <script>
 import DonationNav from '@/components/DonationNav.vue';
-import axios from 'axios'
-import {other_vars} from '@/components/variables.js';
+import axios from 'axios';
+import { other_vars } from '@/components/variables.js';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 
 export default {
-    name: "createDonor",
+    name: 'createDonor',
     components: {
         DonationNav,
         LoadingScreen
@@ -88,41 +122,49 @@ export default {
             first_name: null,
             last_name: null,
             creatingUser: false
-        }
+        };
     },
     mounted: function() {
-        this.phone = this.$route.params.number
-        console.log(this.phone)
+        this.phone = this.$route.params.number;
+        console.log(this.phone);
     },
     methods: {
         addDonor() {
-            console.log(this.phone, this.email, this.first_name, this.last_name)
+            console.log(
+                this.phone,
+                this.email,
+                this.first_name,
+                this.last_name
+            );
             this.creatingUser = true;
-            axios.post(`${other_vars.apiBase}/customers/create/`, {
-                firstName: this.first_name,
-                lastName: this.last_name,
-                email: this.email,
-                phone: this.phone
-            })
-            .then(res => {
-                if(res.data.customer) {
-                    this.$store.state.donation.donor = res.data.customer
-                    console.log(res.data.customer)
-                    this.$router.push('/donate/confirmation/')
-                } else {
-                    alert(`THE FOLLOWING ERROR OCCURRED:\nerror code: ${res.data.status}\n\nRedirecting you to homepage.`)
-                    console.log(res)
-                    this.$router.push('/')
-                }
-            })
-            .catch(err => {
-                alert(err)
-            })
+            axios
+                .post(`${other_vars.apiBase}/customers/create/`, {
+                    firstName: this.first_name,
+                    lastName: this.last_name,
+                    email: this.email,
+                    phone: this.phone
+                })
+                .then(res => {
+                    if (res.data.customer) {
+                        this.$store.state.donation.donor = res.data.customer;
+                        console.log(res.data.customer);
+                        this.$router.push('/donate/confirmation/');
+                    } else {
+                        alert(
+                            `THE FOLLOWING ERROR OCCURRED:\nerror code: ${
+                                res.data.status
+                            }\n\nRedirecting you to homepage.`
+                        );
+                        console.log(res);
+                        this.$router.push('/');
+                    }
+                })
+                .catch(err => {
+                    alert(err);
+                });
         }
     }
-}
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

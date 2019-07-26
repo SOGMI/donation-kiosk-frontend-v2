@@ -1,39 +1,40 @@
 <template>
-  <div class="modal" v-bind:class="{'is-active': active}">
-    <div class="modal-background" v-on:click="closeModal"></div>
-    <div class="modal-content">
-      <div class="modal-card">
-        <div class="modal-card-body">
-          <div class="content">
-            <p>{{ message }}</p>
-          </div>
-          <button v-on:click="closeModal" class="button is-grey">okay</button>
+    <div class="modal" v-bind:class="{ 'is-active': active }">
+        <div class="modal-background" v-on:click="closeModal"></div>
+        <div class="modal-content">
+            <div class="modal-card">
+                <div class="modal-card-body">
+                    <div class="content">
+                        <p>{{ message }}</p>
+                    </div>
+                    <button v-on:click="closeModal" class="button is-grey">
+                        okay
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
+        <button v-on:click="closeModal" class="modal-close is-large"></button>
     </div>
-    <button v-on:click="closeModal" class="modal-close is-large"></button>
-  </div>
 </template>
 
 <script>
 export default {
-    name: "alertModal",
+    name: 'alertModal',
     props: {
-      message: String,
-      active: Boolean
+        message: String,
+        active: Boolean
     },
     methods: {
-      closeModal: function() {
-        this.$emit('close')
-      }
+        closeModal: function() {
+            this.$emit('close');
+        }
     }
-}
+};
 </script>
-
 
 <style lang="scss" scoped>
 button.is-grey {
-  margin-left: 0;
+    margin-left: 0;
 }
 .card {
     text-align: left;

@@ -1,8 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 // import axios from 'axios'
 // import {other_vars} from './components/variables.js';
-
 
 // function getUserList(cursor) {
 //   if(cursor){
@@ -16,36 +15,35 @@ import Vuex from 'vuex'
 //   }
 // }
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    donation: {
-      amount: null,
-      donor: null
-    }
-  },
-  mutations: {
-    reset(state) {
-      state.donation.amount = null;
-      state.donation.donor = null;
+    state: {
+        donation: {
+            amount: null,
+            donor: null
+        }
     },
-    setDonorFirstName(state, firstName) {
-      state.donation.donor.firstName = firstName
+    mutations: {
+        reset(state) {
+            state.donation.amount = null;
+            state.donation.donor = null;
+        },
+        setDonorFirstName(state, firstName) {
+            state.donation.donor.firstName = firstName;
+        },
+        setDonorLastName(state, lastName) {
+            state.donation.donor.lastName = lastName;
+        },
+        setDonorEmail(state, email) {
+            state.donation.donor.email = email;
+        },
+        setDonorPhone(state, phone) {
+            state.donation.donor.phone = phone;
+        },
+        setDonationAmount(state, amount) {
+            state.donation.amount = amount;
+        }
     },
-    setDonorLastName(state, lastName) {
-      state.donation.donor.lastName = lastName
-    },
-    setDonorEmail(state, email){
-      state.donation.donor.email = email
-    },
-    setDonorPhone(state, phone){
-      state.donation.donor.phone = phone
-    },
-    setDonationAmount(state, amount){
-      state.donation.amount = amount
-    }
-  },
-  actions: {
-  }
-})
+    actions: {}
+});
