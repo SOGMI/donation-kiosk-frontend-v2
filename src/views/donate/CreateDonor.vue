@@ -126,16 +126,9 @@ export default {
     },
     mounted: function() {
         this.phone = this.$route.params.number;
-        console.log(this.phone);
     },
     methods: {
         addDonor() {
-            console.log(
-                this.phone,
-                this.email,
-                this.first_name,
-                this.last_name
-            );
             this.creatingUser = true;
             axios
                 .post(`${other_vars.apiBase}/customers/create/`, {
@@ -147,7 +140,6 @@ export default {
                 .then(res => {
                     if (res.data.customer) {
                         this.$store.state.donation.donor = res.data.customer;
-                        console.log(res.data.customer);
                         this.$router.push('/donate/confirmation/');
                     } else {
                         alert(

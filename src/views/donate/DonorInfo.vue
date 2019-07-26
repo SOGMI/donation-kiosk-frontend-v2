@@ -98,7 +98,10 @@
                             </p>
                         </div>
                         <div class="modal-buttons">
-                            <button v-on:click="anonymousDonor" class="button is-success is-medium">
+                            <button
+                                v-on:click="anonymousDonor"
+                                class="button is-success is-medium"
+                            >
                                 Confirm
                             </button>
                             <button
@@ -187,14 +190,12 @@ export default {
                             custPhone = custPhone.replace(' ', '');
                             custPhone = custPhone.replace('-', '');
                             custPhone = custPhone.replace('+1', '');
-                            console.log(custPhone);
                             if (Number(phone) === Number(custPhone)) {
                                 customerFound = true;
                                 this.confirmIdentity(customer);
                                 break;
                             }
                             if (curs) {
-                                console.log(curs);
                                 keepSearching = true;
                                 this.searchForCustomer(phone, curs);
                                 break;
@@ -214,7 +215,6 @@ export default {
         confirmIdentity(obj) {
             this.currentDonor = obj;
             this.searching = false;
-            console.log(this.currentDonor);
         },
         confirmDonor() {
             this.$store.state.donation.donor = this.currentDonor;
@@ -234,8 +234,8 @@ export default {
         anonymousDonor() {
             this.$store.state.donation.donor = {
                 anonymousDonor: true
-            }
-            this.$router.push('/donate/confirmation/')
+            };
+            this.$router.push('/donate/confirmation/');
         }
     }
 };

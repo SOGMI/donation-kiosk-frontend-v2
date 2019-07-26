@@ -79,7 +79,7 @@ export default {
     props: {},
     beforeMount: function() {
         this.currentPage = this.$router.currentRoute.name;
-        console.log(this.currentPage);
+        // console.log(this.currentPage);
     },
     mounted: function() {
         let don = this.$store.state.donation;

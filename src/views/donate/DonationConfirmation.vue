@@ -1,38 +1,52 @@
 <template>
-  <div class="view-body">
-    <DonationNav />
-    <div class="main-content">
-      <div class="container">
-        <div class="title">Please Confirm Your Donation Details</div>
-        <div class="subtitle">(Click on a section to edit it)</div>
-        <div class="columns">
-          <div class="column">
-            <router-link to="/donate/donation-amount/" tag="div" class="card price">
-              <div class="card-content">
-                <div class="priceText">Donation Amount</div>
-                <div class="priceDisplay">${{ donationAmount }}</div>
-              </div>
-            </router-link>
-          </div>
-          <div class="column">
-            <router-link to="/donate/donor-info/" tag="div" class="card">
-              <div class="card-content">
-                <div>
-                  <strong>Donor Info</strong>
+    <div class="view-body">
+        <DonationNav />
+        <div class="main-content">
+            <div class="container">
+                <div class="title">Please Confirm Your Donation Details</div>
+                <div class="subtitle">(Click on a section to edit it)</div>
+                <div class="columns">
+                    <div class="column">
+                        <router-link
+                            to="/donate/donation-amount/"
+                            tag="div"
+                            class="card price"
+                        >
+                            <div class="card-content">
+                                <div class="priceText">Donation Amount</div>
+                                <div class="priceDisplay">
+                                    ${{ donationAmount }}
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
+                    <div class="column">
+                        <router-link
+                            to="/donate/donor-info/"
+                            tag="div"
+                            class="card"
+                        >
+                            <div class="card-content">
+                                <div>
+                                    <strong>Donor Info</strong>
+                                </div>
+                                <div v-for="(value, key) in donor">
+                                    <span class="key">{{ key }}:</span>
+                                    <strong>{{ value }}</strong>
+                                </div>
+                            </div>
+                        </router-link>
+                        <button v-on:click="payWithCard" class="pay-button">
+                            Pay With Card
+                        </button>
+                    </div>
                 </div>
-                <div v-for="(value, key) in donor">
-                  <span class="key">{{ key }}:</span>
-                  <strong>{{ value }}</strong>
-                </div>
-              </div>
-            </router-link>
-            <button v-on:click="payWithCard" class="pay-button">Pay With Card</button>
-          </div>
+                <button v-on:click="cancelDonation" class="cancel">
+                    Cancel
+                </button>
+            </div>
         </div>
-        <button v-on:click="cancelDonation" class="cancel">Cancel</button>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -66,7 +80,9 @@ export default {
                 };
             } else {
                 this.donor = {
-                    name: `${donation.donor.given_name} ${donation.donor.family_name}`,
+                    name: `${donation.donor.given_name} ${
+                        donation.donor.family_name
+                    }`,
                     phone: donation.donor.phone_number,
                     email: donation.donor.email_address
                 };
@@ -119,7 +135,7 @@ export default {
                 'end';
 
             window.open(posURL);
-            console.log(posURL);
+            // console.log(posURL);
         }
     }
 };
