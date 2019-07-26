@@ -44,9 +44,9 @@ export default {
             this.$store.commit("setDonationAmount", num);
             console.log(this.$store.state.donation.amount);
             if (this.$store.state.donation.donor) {
-                this.$router.push("confirmation");
+                this.$router.push("/donate/confirmation/");
             } else {
-                this.$router.push("donor-info");
+                this.$router.push("/donate/donor-info/");
             }
         }
     }

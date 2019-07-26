@@ -9,6 +9,10 @@ html {
     color: $text;
 }
 
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 #app {
     min-height: 100vh;
     background: transparent;
