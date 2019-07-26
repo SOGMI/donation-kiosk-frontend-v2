@@ -98,7 +98,7 @@
                             </p>
                         </div>
                         <div class="modal-buttons">
-                            <button class="button is-success is-medium">
+                            <button v-on:click="anonymousDonor" class="button is-success is-medium">
                                 Confirm
                             </button>
                             <button
@@ -230,6 +230,12 @@ export default {
         },
         createCustomer(number) {
             this.$router.push(`/donate/create-donor/${number}`);
+        },
+        anonymousDonor() {
+            this.$store.state.donation.donor = {
+                anonymousDonor: true
+            }
+            this.$router.push('/donate/confirmation/')
         }
     }
 };

@@ -1,50 +1,38 @@
 <template>
-    <div class="view-body">
-        <DonationNav />
-        <div class="main-content">
-            <div class="container">
-                <div class="title">Please Confirm Your Donation Details</div>
-                <div class="subtitle">(Click on a section to edit it)</div>
-                <div class="columns">
-                    <div class="column">
-                        <router-link
-                            to="/donate/donation-amount/"
-                            tag="div"
-                            class="card price"
-                        >
-                            <div class="card-content">
-                                <div class="priceText">Donation Amount</div>
-                                <div class="priceDisplay">
-                                    ${{ donationAmount }}
-                                </div>
-                            </div>
-                        </router-link>
-                    </div>
-                    <div class="column">
-                        <router-link
-                            to="/donate/donor-info/"
-                            tag="div"
-                            class="card"
-                        >
-                            <div class="card-content">
-                                <div><strong>Donor Info</strong></div>
-                                <div v-for="(value, key) in donor">
-                                    <span class="key">{{ key }}: </span>
-                                    <strong>{{ value }}</strong>
-                                </div>
-                            </div>
-                        </router-link>
-                        <button v-on:click="payWithCard" class="pay-button">
-                            Pay With Card
-                        </button>
-                    </div>
+  <div class="view-body">
+    <DonationNav />
+    <div class="main-content">
+      <div class="container">
+        <div class="title">Please Confirm Your Donation Details</div>
+        <div class="subtitle">(Click on a section to edit it)</div>
+        <div class="columns">
+          <div class="column">
+            <router-link to="/donate/donation-amount/" tag="div" class="card price">
+              <div class="card-content">
+                <div class="priceText">Donation Amount</div>
+                <div class="priceDisplay">${{ donationAmount }}</div>
+              </div>
+            </router-link>
+          </div>
+          <div class="column">
+            <router-link to="/donate/donor-info/" tag="div" class="card">
+              <div class="card-content">
+                <div>
+                  <strong>Donor Info</strong>
                 </div>
-                <button v-on:click="cancelDonation" class="cancel">
-                    Cancel
-                </button>
-            </div>
+                <div v-for="(value, key) in donor">
+                  <span class="key">{{ key }}:</span>
+                  <strong>{{ value }}</strong>
+                </div>
+              </div>
+            </router-link>
+            <button v-on:click="payWithCard" class="pay-button">Pay With Card</button>
+          </div>
         </div>
+        <button v-on:click="cancelDonation" class="cancel">Cancel</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -70,13 +58,19 @@ export default {
         let donation = this.$store.state.donation;
         if (donation.amount && donation.donor) {
             this.donationAmount = donation.amount;
-            this.donor = {
-                name: `${donation.donor.given_name} ${
-                    donation.donor.family_name
-                }`,
-                phone: donation.donor.phone_number,
-                email: donation.donor.email_address
-            };
+            if (donation.donor.anonymousDonor) {
+                this.donor = {
+                    name: `Anonymous`,
+                    phone: `N/A`,
+                    email: `N/A`
+                };
+            } else {
+                this.donor = {
+                    name: `${donation.donor.given_name} ${donation.donor.family_name}`,
+                    phone: donation.donor.phone_number,
+                    email: donation.donor.email_address
+                };
+            }
         } else {
             if (!donation.amount && !donation.donor) {
                 this.$router.push(`/`);
