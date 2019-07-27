@@ -100,6 +100,7 @@
             </div>
         </div>
         <LoadingScreen v-if="creatingUser" message="creating donor profile" />
+        <AlertModal v-on:close="alertModal = !alertModal" v-bind:active="alertModal" v-bind:message="'Phone must be full 10-digit number including the area code'" />
     </div>
 </template>
 
@@ -108,12 +109,14 @@ import DonationNav from '@/components/DonationNav.vue';
 import axios from 'axios';
 import { other_vars } from '@/components/variables.js';
 import LoadingScreen from '@/components/LoadingScreen.vue';
+import AlertModal from '@/components/AlertModal.vue';
 
 export default {
     name: 'createDonor',
     components: {
         DonationNav,
-        LoadingScreen
+        LoadingScreen,
+        AlertModal
     },
     data: function() {
         return {
@@ -121,7 +124,8 @@ export default {
             email: null,
             first_name: null,
             last_name: null,
-            creatingUser: false
+            creatingUser: false,
+            alertModal: false
         };
     },
     mounted: function() {
@@ -129,31 +133,35 @@ export default {
     },
     methods: {
         addDonor() {
-            this.creatingUser = true;
-            axios
-                .post(`${other_vars.apiBase}/customers/create/`, {
-                    firstName: this.first_name,
-                    lastName: this.last_name,
-                    email: this.email,
-                    phone: this.phone
-                })
-                .then(res => {
-                    if (res.data.customer) {
-                        this.$store.state.donation.donor = res.data.customer;
-                        this.$router.push('/donate/confirmation/');
-                    } else {
-                        alert(
-                            `THE FOLLOWING ERROR OCCURRED:\nerror code: ${
-                                res.data.status
-                            }\n\nRedirecting you to homepage.`
-                        );
-                        console.log(res);
-                        this.$router.push('/');
-                    }
-                })
-                .catch(err => {
-                    alert(err);
-                });
+            if(this.phone.length === 10) {
+                this.creatingUser = true;
+                axios
+                    .post(`${other_vars.apiBase}/customers/create/`, {
+                        firstName: this.first_name,
+                        lastName: this.last_name,
+                        email: this.email,
+                        phone: this.phone
+                    })
+                    .then(res => {
+                        if (res.data.customer) {
+                            this.$store.state.donation.donor = res.data.customer;
+                            this.$router.push('/donate/confirmation/');
+                        } else {
+                            alert(
+                                `THE FOLLOWING ERROR OCCURRED:\nerror code: ${
+                                    res.data.status
+                                }\n\nRedirecting you to homepage.`
+                            );
+                            console.log(res);
+                            this.$router.push('/');
+                        }
+                    })
+                    .catch(err => {
+                        alert(err);
+                    });
+            } else {
+                this.alertModal = true;
+            }
         }
     }
 };
