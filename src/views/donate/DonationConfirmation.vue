@@ -1,7 +1,7 @@
 <template>
     <div class="view-body">
         <DonationNav />
-        <div class="main-content">
+        <div v-if="!donationConfirmed" class="main-content">
             <div class="container">
                 <div class="title">Please Confirm Your Donation Details</div>
                 <div class="subtitle">(Click on a section to edit it)</div>
@@ -46,20 +46,24 @@
                 </button>
             </div>
         </div>
+        <LoadingScreen v-if="donationConfirmed" :message="'initializing card reader'"/>
     </div>
 </template>
 
 <script>
 import DonationNav from '@/components/DonationNav.vue';
+import LoadingScreen from '@/components/LoadingScreen.vue';
 import { other_vars } from '@/components/variables.js';
 
 export default {
     name: 'DonationConfirmation',
     components: {
-        DonationNav
+        DonationNav,
+        LoadingScreen
     },
     data: function() {
         return {
+            donationConfirmed: false,
             donationAmount: null,
             donor: {
                 name: null,
@@ -104,6 +108,7 @@ export default {
             this.$router.push('/');
         },
         payWithCard() {
+            this.donationConfirmed = true;
             let callbackUrl = other_vars.callbackUrl;
             let applicationId = other_vars.appId;
             let currencyCode = 'USD';
