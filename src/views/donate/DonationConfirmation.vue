@@ -138,8 +138,9 @@ export default {
                 tenderTypes +
                 ';' +
                 'end';
-
-            window.open(posURL);
+            setTimeout(function(){
+                window.open(posURL);
+            }, 600)
             // console.log(posURL);
         }
     }
