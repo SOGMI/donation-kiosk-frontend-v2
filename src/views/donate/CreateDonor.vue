@@ -100,7 +100,13 @@
             </div>
         </div>
         <LoadingScreen v-if="creatingUser" message="creating donor profile" />
-        <AlertModal v-on:close="alertModal = !alertModal" v-bind:active="alertModal" v-bind:message="'Phone must be full 10-digit number including the area code'" />
+        <AlertModal
+            v-on:close="alertModal = !alertModal"
+            v-bind:active="alertModal"
+            v-bind:message="
+                'Phone must be full 10-digit number including the area code'
+            "
+        />
     </div>
 </template>
 
@@ -133,7 +139,7 @@ export default {
     },
     methods: {
         addDonor() {
-            if(this.phone.length === 10) {
+            if (this.phone.length === 10) {
                 this.creatingUser = true;
                 axios
                     .post(`${other_vars.apiBase}/customers/create/`, {
@@ -144,7 +150,8 @@ export default {
                     })
                     .then(res => {
                         if (res.data.customer) {
-                            this.$store.state.donation.donor = res.data.customer;
+                            this.$store.state.donation.donor =
+                                res.data.customer;
                             this.$router.push('/donate/confirmation/');
                         } else {
                             alert(

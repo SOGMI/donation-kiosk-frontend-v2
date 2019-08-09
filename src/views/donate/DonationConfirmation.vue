@@ -46,7 +46,10 @@
                 </button>
             </div>
         </div>
-        <LoadingScreen v-if="donationConfirmed" :message="'initializing card reader'"/>
+        <LoadingScreen
+            v-if="donationConfirmed"
+            :message="'initializing card reader'"
+        />
     </div>
 </template>
 
@@ -138,9 +141,9 @@ export default {
                 tenderTypes +
                 ';' +
                 'end';
-            setTimeout(function(){
+            setTimeout(function() {
                 window.open(posURL);
-            }, 600)
+            }, 600);
             // console.log(posURL);
         }
     }
