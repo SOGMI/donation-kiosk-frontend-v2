@@ -214,6 +214,12 @@ export default {
         },
         confirmIdentity(obj) {
             this.currentDonor = obj;
+            
+            // censor email
+            let arr = this.currentDonor.email_address.split("@");
+            let censoredEmail = `${this.censorWord(arr[0])}@${arr[1]}`
+            this.currentDonor.email_address = censoredEmail
+
             this.searching = false;
         },
         confirmDonor() {
@@ -236,6 +242,9 @@ export default {
                 anonymousDonor: true
             };
             this.$router.push('/donate/confirmation/');
+        },
+        censorWord(str) {
+            return str[0] + "*".repeat(str.length - 4) + str.slice(-3);
         }
     }
 };
