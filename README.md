@@ -1,4 +1,5 @@
 # donation-kiosk-frontend-v2
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/af059fdbb5de44deb8aeeacde7eed7a5)](https://www.codacy.com/app/joshmossas/donation-kiosk-frontend-v2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SOGMI/donation-kiosk-frontend-v2&amp;utm_campaign=Badge_Grade)
 
 ## Project setup
 ```
