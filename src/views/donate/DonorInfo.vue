@@ -18,13 +18,9 @@
                             name="phoneNumber"
                             id="customerPhoneNumber"
                         />
-                        <button class="large-submit" type="submit">
-                            SUBMIT
-                        </button>
+                        <button class="large-submit" type="submit">SUBMIT</button>
                     </form>
-                    <button v-on:click="openAnonModal" class="cancel">
-                        I want to give anonymously
-                    </button>
+                    <button v-on:click="openAnonModal" class="cancel">I want to give anonymously</button>
                 </div>
             </div>
         </div>
@@ -48,10 +44,10 @@
                         <div class="content">
                             <p>
                                 Name:
-                                <strong
-                                    >{{ currentDonor.given_name }}
-                                    {{ currentDonor.family_name }}</strong
-                                >
+                                <strong>
+                                    {{ currentDonor.given_name }}
+                                    {{ currentDonor.family_name }}
+                                </strong>
                             </p>
                             <p>
                                 Phone:
@@ -59,23 +55,18 @@
                             </p>
                             <p>
                                 Email:
-                                <strong>{{
+                                <strong>
+                                    {{
                                     currentDonor.email_address
-                                }}</strong>
+                                    }}
+                                </strong>
                             </p>
                         </div>
                         <button
                             v-on:click="confirmDonor"
                             class="button is-success is-medium"
-                        >
-                            Confirm
-                        </button>
-                        <button
-                            v-on:click="cancel"
-                            class="button is-grey is-medium"
-                        >
-                            Cancel
-                        </button>
+                        >Confirm</button>
+                        <button v-on:click="cancel" class="button is-grey is-medium">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -101,23 +92,13 @@
                             <button
                                 v-on:click="anonymousDonor"
                                 class="button is-success is-medium"
-                            >
-                                Confirm
-                            </button>
-                            <button
-                                v-on:click="cancel"
-                                class="button is-grey is-medium"
-                            >
-                                Cancel
-                            </button>
+                            >Confirm</button>
+                            <button v-on:click="cancel" class="button is-grey is-medium">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <button
-                v-on:click="closeAnonModal"
-                class="modal-close is-large"
-            ></button>
+            <button v-on:click="closeAnonModal" class="modal-close is-large"></button>
         </div>
     </div>
 </template>
@@ -181,10 +162,13 @@ export default {
                         let customerFound = false;
                         let keepSearching = false;
                         for (let customer of customers) {
-                            let custPhone = customer.phone_number.replace(
-                                '(',
-                                ''
-                            );
+                            let custPhone = '';
+                            if (customer.phone_number) {
+                                custPhone = customer.phone_number.replace(
+                                    '(',
+                                    ''
+                                );
+                            }
                             custPhone = custPhone.replace(')', '');
                             custPhone = custPhone.replace('(', '');
                             custPhone = custPhone.replace(' ', '');
