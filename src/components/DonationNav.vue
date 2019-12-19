@@ -68,7 +68,7 @@
 <script>
 export default {
     name: 'DonationNav',
-    data: function() {
+    data() {
         return {
             donationSet: false,
             donorSet: false,
@@ -77,12 +77,12 @@ export default {
         };
     },
     props: {},
-    beforeMount: function() {
+    beforeMount() {
         this.currentPage = this.$router.currentRoute.name;
         // console.log(this.currentPage);
     },
-    mounted: function() {
-        let don = this.$store.state.donation;
+    mounted() {
+        const don = this.$store.state.donation;
         if (don.amount) {
             this.donationSet = true;
         }

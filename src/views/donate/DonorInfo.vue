@@ -18,9 +18,13 @@
                             name="phoneNumber"
                             id="customerPhoneNumber"
                         />
-                        <button class="large-submit" type="submit">SUBMIT</button>
+                        <button class="large-submit" type="submit">
+                            SUBMIT
+                        </button>
                     </form>
-                    <button v-on:click="openAnonModal" class="cancel">I want to give anonymously</button>
+                    <button v-on:click="openAnonModal" class="cancel">
+                        I want to give anonymously
+                    </button>
                 </div>
             </div>
         </div>
@@ -56,17 +60,22 @@
                             <p>
                                 Email:
                                 <strong>
-                                    {{
-                                    currentDonor.email_address
-                                    }}
+                                    {{ currentDonor.email_address }}
                                 </strong>
                             </p>
                         </div>
                         <button
                             v-on:click="confirmDonor"
                             class="button is-success is-medium"
-                        >Confirm</button>
-                        <button v-on:click="cancel" class="button is-grey is-medium">Cancel</button>
+                        >
+                            Confirm
+                        </button>
+                        <button
+                            v-on:click="cancel"
+                            class="button is-grey is-medium"
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </div>
             </div>
@@ -92,31 +101,38 @@
                             <button
                                 v-on:click="anonymousDonor"
                                 class="button is-success is-medium"
-                            >Confirm</button>
-                            <button v-on:click="cancel" class="button is-grey is-medium">Cancel</button>
+                            >
+                                Confirm
+                            </button>
+                            <button
+                                v-on:click="cancel"
+                                class="button is-grey is-medium"
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <button v-on:click="closeAnonModal" class="modal-close is-large"></button>
+            <button
+                v-on:click="closeAnonModal"
+                class="modal-close is-large"
+            ></button>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 import DonationNav from '@/components/DonationNav.vue';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 import AlertModal from '@/components/AlertModal.vue';
-import axios from 'axios';
-import { other_vars } from '@/components/variables.js';
-
-// let other_vars = {
-//     apiBase: `http://localhost:8000`
-// };
+// eslint-disable-next-line camelcase
+import otherVars from '@/components/variables';
 
 export default {
     name: 'DonorInfo',
-    data: function() {
+    data() {
         return {
             anonModal: false,
             phoneNumber: null,
@@ -138,7 +154,7 @@ export default {
             this.anonModal = false;
         },
         submitPhoneNumber() {
-            let phone = this.phoneNumber;
+            const phone = this.phoneNumber;
             if (phone.length === 10) {
                 this.searchForCustomer(phone);
                 this.searching = true;
@@ -149,19 +165,19 @@ export default {
         searchForCustomer(phone, cursor) {
             let url;
             if (cursor) {
-                url = `${other_vars.apiBase}/customers/search?cursor=${cursor}`;
+                url = `${otherVars.apiBase}/customers/search?cursor=${cursor}`;
             } else {
-                url = `${other_vars.apiBase}/customers/search`;
+                url = `${otherVars.apiBase}/customers/search`;
             }
             axios
                 .get(`${url}`)
                 .then(res => {
-                    let customers = res.data.customers;
-                    let curs = res.data.cursor;
+                    const { customers } = res.data;
+                    const curs = res.data.cursor;
                     if (customers) {
                         let customerFound = false;
                         let keepSearching = false;
-                        for (let customer of customers) {
+                        for (const customer of customers) {
                             let custPhone = '';
                             if (customer.phone_number) {
                                 custPhone = customer.phone_number.replace(
@@ -200,8 +216,8 @@ export default {
             this.currentDonor = obj;
 
             // censor email
-            let arr = this.currentDonor.email_address.split('@');
-            let censoredEmail = `${this.censorWord(arr[0])}@${arr[1]}`;
+            const arr = this.currentDonor.email_address.split('@');
+            const censoredEmail = `${this.censorWord(arr[0])}@${arr[1]}`;
             this.currentDonor.email_address = censoredEmail;
 
             this.searching = false;

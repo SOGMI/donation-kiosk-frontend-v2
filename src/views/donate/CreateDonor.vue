@@ -111,9 +111,9 @@
 </template>
 
 <script>
-import DonationNav from '@/components/DonationNav.vue';
 import axios from 'axios';
-import { other_vars } from '@/components/variables.js';
+import DonationNav from '@/components/DonationNav.vue';
+import otherVars from '@/components/variables';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 import AlertModal from '@/components/AlertModal.vue';
 
@@ -124,7 +124,7 @@ export default {
         LoadingScreen,
         AlertModal
     },
-    data: function() {
+    data() {
         return {
             phone: null,
             email: null,
@@ -134,7 +134,7 @@ export default {
             alertModal: false
         };
     },
-    mounted: function() {
+    mounted() {
         this.phone = this.$route.params.number;
     },
     methods: {
@@ -142,7 +142,7 @@ export default {
             if (this.phone.length === 10) {
                 this.creatingUser = true;
                 axios
-                    .post(`${other_vars.apiBase}/customers/create/`, {
+                    .post(`${otherVars.apiBase}/customers/create/`, {
                         firstName: this.first_name,
                         lastName: this.last_name,
                         email: this.email,
@@ -155,9 +155,7 @@ export default {
                             this.$router.push('/donate/confirmation/');
                         } else {
                             alert(
-                                `THE FOLLOWING ERROR OCCURRED:\nerror code: ${
-                                    res.data.status
-                                }\n\nRedirecting you to homepage.`
+                                `THE FOLLOWING ERROR OCCURRED:\nerror code: ${res.data.status}\n\nRedirecting you to homepage.`
                             );
                             console.log(res);
                             this.$router.push('/');
