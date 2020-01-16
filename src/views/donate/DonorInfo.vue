@@ -127,16 +127,12 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import DonationNav from '@/components/DonationNav.vue';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 import AlertModal from '@/components/AlertModal.vue';
-import axios from 'axios';
-import { other_vars } from '@/components/variables.js';
-
-// let other_vars = {
-//     apiBase: `http://localhost:8000`
-// };
+// eslint-disable-next-line camelcase
+import otherVars from '@/components/variables';
 
 export default {
     name: 'DonorInfo',
-    data: function() {
+    data() {
         return {
             anonModal: false,
             phoneNumber: null,
@@ -158,7 +154,7 @@ export default {
             this.anonModal = false;
         },
         submitPhoneNumber() {
-            let phone = this.phoneNumber;
+            const phone = this.phoneNumber;
             if (phone.length === 10) {
                 this.searchForCustomer(phone);
                 this.searching = true;
@@ -171,9 +167,9 @@ export default {
             inputedNumber = inputedNumber.formatInternational();
             let url;
             if (cursor) {
-                url = `${other_vars.apiBase}/customers/search?cursor=${cursor}`;
+                url = `${otherVars.apiBase}/customers/search?cursor=${cursor}`;
             } else {
-                url = `${other_vars.apiBase}/customers/search`;
+                url = `${otherVars.apiBase}/customers/search`;
             }
             const currentDonor = await axios.get(url).then(response => {
                 const customers = response.data.customers;
@@ -206,8 +202,8 @@ export default {
             this.currentDonor = obj;
 
             // censor email
-            let arr = this.currentDonor.email_address.split('@');
-            let censoredEmail = `${this.censorWord(arr[0])}@${arr[1]}`;
+            const arr = this.currentDonor.email_address.split('@');
+            const censoredEmail = `${this.censorWord(arr[0])}@${arr[1]}`;
             this.currentDonor.email_address = censoredEmail;
 
             this.searching = false;

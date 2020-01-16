@@ -25,7 +25,7 @@ export default {
         active: Boolean
     },
     methods: {
-        closeModal: function() {
+        closeModal() {
             this.$emit('close');
         }
     }

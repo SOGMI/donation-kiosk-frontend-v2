@@ -7,7 +7,8 @@
                 <div class="price-buttons">
                     <div class="columns is-multiline is-mobile">
                         <div
-                            v-for="item in priceOptions"
+                            v-for="(item, index) in priceOptions"
+                            v-bind:key="index"
                             class="column is-one-quarter-tablet is-half-mobile"
                         >
                             <div
@@ -64,12 +65,13 @@
 
 <script>
 import DonationNav from '@/components/DonationNav.vue';
+
 export default {
     name: 'DonationAmount',
     components: {
         DonationNav
     },
-    data: function() {
+    data() {
         return {
             priceOptions: [25, 50, 100, 250, 500, 1000],
             donation: {

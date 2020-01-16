@@ -30,7 +30,10 @@
                                 <div>
                                     <strong>Donor Info</strong>
                                 </div>
-                                <div v-for="(value, key) in donor">
+                                <div
+                                    v-for="(value, key) in donor"
+                                    v-bind:key="key"
+                                >
                                     <span class="key">{{ key }}:</span>
                                     <strong>{{ value }}</strong>
                                 </div>
@@ -56,7 +59,7 @@
 <script>
 import DonationNav from '@/components/DonationNav.vue';
 import LoadingScreen from '@/components/LoadingScreen.vue';
-import { other_vars } from '@/components/variables.js';
+import otherVars from '@/components/variables';
 
 export default {
     name: 'DonationConfirmation',
@@ -64,7 +67,7 @@ export default {
         DonationNav,
         LoadingScreen
     },
-    data: function() {
+    data() {
         return {
             donationConfirmed: false,
             donationAmount: null,
@@ -75,33 +78,29 @@ export default {
             }
         };
     },
-    mounted: function() {
-        let donation = this.$store.state.donation;
+    mounted() {
+        const { donation } = this.$store.state;
         if (donation.amount && donation.donor) {
             this.donationAmount = donation.amount;
             if (donation.donor.anonymousDonor) {
                 this.donor = {
-                    name: `Anonymous`,
-                    phone: `N/A`,
-                    email: `N/A`
+                    name: 'Anonymous',
+                    phone: 'N/A',
+                    email: 'N/A'
                 };
             } else {
                 this.donor = {
-                    name: `${donation.donor.given_name} ${
-                        donation.donor.family_name
-                    }`,
+                    name: `${donation.donor.given_name} ${donation.donor.family_name}`,
                     phone: donation.donor.phone_number,
                     email: donation.donor.email_address
                 };
             }
+        } else if (!donation.amount && !donation.donor) {
+            this.$router.push('/');
+        } else if (!donation.donor) {
+            this.$router.push('/donate/donor-info/');
         } else {
-            if (!donation.amount && !donation.donor) {
-                this.$router.push(`/`);
-            } else if (!donation.donor) {
-                this.$router.push('/donate/donor-info/');
-            } else {
-                this.$router.push('/donate/donation-amount/');
-            }
+            this.$router.push('/donate/donation-amount/');
         }
     },
     methods: {
@@ -112,36 +111,25 @@ export default {
         },
         payWithCard() {
             this.donationConfirmed = true;
-            let callbackUrl = other_vars.callbackUrl;
-            let applicationId = other_vars.appId;
-            let currencyCode = 'USD';
-            let sdkVersion = 'v2.0';
-            let transactionTotal = Number(this.donationAmount) * 100;
-            let tenderTypes = `com.squareup.pos.TENDER_CARD, com.squareup.pos.TENDER_CARD_ON_FILE`;
-            let posURL =
-                'intent:#Intent;' +
-                'action=com.squareup.pos.action.CHARGE;' +
-                'package=com.squareup;' +
-                'S.com.squareup.pos.WEB_CALLBACK_URI=' +
-                callbackUrl +
-                ';' +
-                'S.com.squareup.pos.CLIENT_ID=' +
-                applicationId +
-                ';' +
-                'S.com.squareup.pos.API_VERSION=' +
-                sdkVersion +
-                ';' +
-                'i.com.squareup.pos.TOTAL_AMOUNT=' +
-                transactionTotal +
-                ';' +
-                'S.com.squareup.pos.CURRENCY_CODE=' +
-                currencyCode +
-                ';' +
-                'S.com.squareup.pos.TENDER_TYPES=' +
-                tenderTypes +
-                ';' +
-                'end';
-            setTimeout(function() {
+            const { callbackUrl } = otherVars;
+            const applicationId = otherVars.appId;
+            const currencyCode = 'USD';
+            const sdkVersion = 'v2.0';
+            const transactionTotal = Number(this.donationAmount) * 100;
+            const tenderTypes =
+                'com.squareup.pos.TENDER_CARD, com.squareup.pos.TENDER_CARD_ON_FILE';
+            const posURL =
+                `${'intent:#Intent;' +
+                    'action=com.squareup.pos.action.CHARGE;' +
+                    'package=com.squareup;' +
+                    'S.com.squareup.pos.WEB_CALLBACK_URI='}${callbackUrl};` +
+                `S.com.squareup.pos.CLIENT_ID=${applicationId};` +
+                `S.com.squareup.pos.API_VERSION=${sdkVersion};` +
+                `i.com.squareup.pos.TOTAL_AMOUNT=${transactionTotal};` +
+                `S.com.squareup.pos.CURRENCY_CODE=${currencyCode};` +
+                `S.com.squareup.pos.TENDER_TYPES=${tenderTypes};` +
+                `end`;
+            setTimeout(() => {
                 window.open(posURL);
             }, 600);
             // console.log(posURL);
