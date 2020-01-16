@@ -18,9 +18,13 @@
                             name="phoneNumber"
                             id="customerPhoneNumber"
                         />
-                        <button class="large-submit" type="submit">SUBMIT</button>
+                        <button class="large-submit" type="submit">
+                            SUBMIT
+                        </button>
                     </form>
-                    <button v-on:click="openAnonModal" class="cancel">I want to give anonymously</button>
+                    <button v-on:click="openAnonModal" class="cancel">
+                        I want to give anonymously
+                    </button>
                 </div>
             </div>
         </div>
@@ -56,17 +60,22 @@
                             <p>
                                 Email:
                                 <strong>
-                                    {{
-                                    currentDonor.email_address
-                                    }}
+                                    {{ currentDonor.email_address }}
                                 </strong>
                             </p>
                         </div>
                         <button
                             v-on:click="confirmDonor"
                             class="button is-success is-medium"
-                        >Confirm</button>
-                        <button v-on:click="cancel" class="button is-grey is-medium">Cancel</button>
+                        >
+                            Confirm
+                        </button>
+                        <button
+                            v-on:click="cancel"
+                            class="button is-grey is-medium"
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </div>
             </div>
@@ -92,18 +101,29 @@
                             <button
                                 v-on:click="anonymousDonor"
                                 class="button is-success is-medium"
-                            >Confirm</button>
-                            <button v-on:click="cancel" class="button is-grey is-medium">Cancel</button>
+                            >
+                                Confirm
+                            </button>
+                            <button
+                                v-on:click="cancel"
+                                class="button is-grey is-medium"
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <button v-on:click="closeAnonModal" class="modal-close is-large"></button>
+            <button
+                v-on:click="closeAnonModal"
+                class="modal-close is-large"
+            ></button>
         </div>
     </div>
 </template>
 
 <script>
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import DonationNav from '@/components/DonationNav.vue';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 import AlertModal from '@/components/AlertModal.vue';
@@ -146,55 +166,41 @@ export default {
                 this.phoneLengthAlert = true;
             }
         },
-        searchForCustomer(phone, cursor) {
+        async searchForCustomer(phone, cursor) {
+            let inputedNumber = parsePhoneNumberFromString(phone, 'US');
+            inputedNumber = inputedNumber.formatInternational();
             let url;
             if (cursor) {
                 url = `${other_vars.apiBase}/customers/search?cursor=${cursor}`;
             } else {
                 url = `${other_vars.apiBase}/customers/search`;
             }
-            axios
-                .get(`${url}`)
-                .then(res => {
-                    let customers = res.data.customers;
-                    let curs = res.data.cursor;
-                    if (customers) {
-                        let customerFound = false;
-                        let keepSearching = false;
-                        for (let customer of customers) {
-                            let custPhone = '';
-                            if (customer.phone_number) {
-                                custPhone = customer.phone_number.replace(
-                                    '(',
-                                    ''
-                                );
-                            }
-                            custPhone = custPhone.replace(')', '');
-                            custPhone = custPhone.replace('(', '');
-                            custPhone = custPhone.replace(' ', '');
-                            custPhone = custPhone.replace('-', '');
-                            custPhone = custPhone.replace('+1', '');
-                            if (Number(phone) === Number(custPhone)) {
-                                customerFound = true;
-                                this.confirmIdentity(customer);
-                                break;
-                            }
-                            if (curs) {
-                                keepSearching = true;
-                                this.searchForCustomer(phone, curs);
-                                break;
-                            }
-                        }
-                        if (!customerFound && !keepSearching) {
-                            this.createCustomer(phone);
-                        }
-                    } else {
-                        this.createCustomer(phone);
+            const currentDonor = await axios.get(url).then(response => {
+                const customers = response.data.customers;
+                if (!customers) {
+                    return null;
+                }
+                let currentCustomer = null;
+                customers.forEach(customer => {
+                    let custPhone = customer.phone_number || null;
+                    if (custPhone) {
+                        custPhone = parsePhoneNumberFromString(custPhone, 'US');
+                        custPhone = custPhone.formatInternational();
                     }
-                })
-                .catch(err => {
-                    console.log(err);
+                    if (custPhone === inputedNumber) {
+                        return (currentCustomer = customer);
+                    }
+                    return null;
                 });
+                return currentCustomer;
+            });
+            if (currentDonor) {
+                return [
+                    (this.currentDonor = currentDonor),
+                    (this.searching = false)
+                ];
+            }
+            return this.createCustomer(phone);
         },
         confirmIdentity(obj) {
             this.currentDonor = obj;
