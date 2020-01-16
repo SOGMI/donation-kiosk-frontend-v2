@@ -129,6 +129,7 @@ import LoadingScreen from '@/components/LoadingScreen.vue';
 import AlertModal from '@/components/AlertModal.vue';
 // eslint-disable-next-line camelcase
 import otherVars from '@/components/variables';
+import axios from 'axios';
 
 export default {
     name: 'DonorInfo',
