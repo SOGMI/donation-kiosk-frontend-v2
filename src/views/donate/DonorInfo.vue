@@ -123,13 +123,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import DonationNav from '@/components/DonationNav.vue';
 import LoadingScreen from '@/components/LoadingScreen.vue';
 import AlertModal from '@/components/AlertModal.vue';
 // eslint-disable-next-line camelcase
 import otherVars from '@/components/variables';
-import axios from 'axios';
 
 export default {
     name: 'DonorInfo',
@@ -173,7 +173,7 @@ export default {
                 url = `${otherVars.apiBase}/customers/search`;
             }
             const currentDonor = await axios.get(url).then(response => {
-                const customers = response.data.customers;
+                const { customers } = response.data;
                 if (!customers) {
                     return null;
                 }
