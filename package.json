@@ -14,10 +14,10 @@
         "axios": "^0.19.2",
         "bulma": "^0.7.5",
         "core-js": "^2.6.11",
-        "libphonenumber-js": "^1.7.55",
+        "libphonenumber-js": "^1.7.57",
         "register-service-worker": "^1.7.1",
-        "vue": "^2.6.11",
-        "vue-router": "^3.3.4",
+        "vue": "^2.6.12",
+        "vue-router": "^3.4.3",
         "vuex": "^3.5.1"
     },
     "devDependencies": {
@@ -35,7 +35,7 @@
         "node-sass": "^4.14.1",
         "prettier": "^1.19.1",
         "sass-loader": "^7.3.1",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.12"
     },
     "eslintConfig": {
         "root": true,
