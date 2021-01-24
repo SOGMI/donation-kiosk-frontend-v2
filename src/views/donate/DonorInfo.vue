@@ -139,13 +139,13 @@ export default {
             phoneNumber: null,
             currentDonor: null,
             searching: false,
-            phoneLengthAlert: false
+            phoneLengthAlert: false,
         };
     },
     components: {
         DonationNav,
         LoadingScreen,
-        AlertModal
+        AlertModal,
     },
     methods: {
         openAnonModal() {
@@ -172,30 +172,29 @@ export default {
             } else {
                 url = `${otherVars.apiBase}/customers/search`;
             }
-            const currentDonor = await axios.get(url).then(response => {
+            const currentDonor = await axios.get(url).then((response) => {
                 const { customers } = response.data;
                 if (!customers) {
                     return null;
                 }
                 let currentCustomer = null;
-                customers.forEach(customer => {
+                customers.forEach((customer) => {
                     let custPhone = customer.phone_number || null;
                     if (custPhone) {
                         custPhone = parsePhoneNumberFromString(custPhone, 'US');
                         custPhone = custPhone.formatInternational();
                     }
                     if (custPhone === inputedNumber) {
-                        return (currentCustomer = customer);
+                        currentCustomer = customer;
                     }
                     return null;
                 });
                 return currentCustomer;
             });
             if (currentDonor) {
-                return [
-                    (this.currentDonor = currentDonor),
-                    (this.searching = false)
-                ];
+                this.currentDonor = currentDonor;
+                this.searching = false;
+                return null;
             }
             return this.createCustomer(phone);
         },
@@ -226,14 +225,14 @@ export default {
         },
         anonymousDonor() {
             this.$store.state.donation.donor = {
-                anonymousDonor: true
+                anonymousDonor: true,
             };
             this.$router.push('/donate/confirmation/');
         },
         censorWord(str) {
             return str[0] + '*'.repeat(str.length - 4) + str.slice(-3);
-        }
-    }
+        },
+    },
 };
 </script>
 

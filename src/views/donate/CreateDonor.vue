@@ -103,9 +103,7 @@
         <AlertModal
             v-on:close="alertModal = !alertModal"
             v-bind:active="alertModal"
-            v-bind:message="
-                'Phone must be full 10-digit number including the area code'
-            "
+            v-bind:message="'Phone must be full 10-digit number including the area code'"
         />
     </div>
 </template>
@@ -122,7 +120,7 @@ export default {
     components: {
         DonationNav,
         LoadingScreen,
-        AlertModal
+        AlertModal,
     },
     data() {
         return {
@@ -131,7 +129,7 @@ export default {
             first_name: null,
             last_name: null,
             creatingUser: false,
-            alertModal: false
+            alertModal: false,
         };
     },
     mounted() {
@@ -146,29 +144,32 @@ export default {
                         firstName: this.first_name,
                         lastName: this.last_name,
                         email: this.email,
-                        phone: this.phone
+                        phone: this.phone,
                     })
-                    .then(res => {
+                    .then((res) => {
                         if (res.data.customer) {
                             this.$store.state.donation.donor =
                                 res.data.customer;
                             this.$router.push('/donate/confirmation/');
                         } else {
+                            // eslint-disable-next-line no-alert
                             alert(
                                 `THE FOLLOWING ERROR OCCURRED:\nerror code: ${res.data.status}\n\nRedirecting you to homepage.`
                             );
+                            // eslint-disable-next-line no-console
                             console.log(res);
                             this.$router.push('/');
                         }
                     })
-                    .catch(err => {
+                    .catch((err) => {
+                        // eslint-disable-next-line no-alert
                         alert(err);
                     });
             } else {
                 this.alertModal = true;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

@@ -34,7 +34,7 @@
                     class="process-nav-item"
                     v-bind:class="{
                         'info-set': donorSet,
-                        'router-link-active': currentPage == 'Create Donor'
+                        'router-link-active': currentPage == 'Create Donor',
                     }"
                 >
                     <div class="icon">
@@ -73,7 +73,7 @@ export default {
             donationSet: false,
             donorSet: false,
             bothSet: false,
-            currentPage: ''
+            currentPage: '',
         };
     },
     props: {},
@@ -97,10 +97,10 @@ export default {
         reset() {
             this.$store.state.donation = {
                 amount: null,
-                donor: null
+                donor: null,
             };
             this.$router.push('/');
-        }
-    }
+        },
+    },
 };
 </script>

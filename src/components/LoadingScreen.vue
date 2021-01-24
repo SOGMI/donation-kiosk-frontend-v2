@@ -13,10 +13,10 @@ import Spinner from '@/components/Spinner.vue';
 export default {
     name: 'loadingScreen',
     components: {
-        Spinner
+        Spinner,
     },
     props: {
-        message: String
-    }
+        message: String,
+    },
 };
 </script>

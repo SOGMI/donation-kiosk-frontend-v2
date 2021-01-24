@@ -69,16 +69,16 @@ import DonationNav from '@/components/DonationNav.vue';
 export default {
     name: 'DonationAmount',
     components: {
-        DonationNav
+        DonationNav,
     },
     data() {
         return {
             priceOptions: [25, 50, 100, 250, 500, 1000],
             donation: {
                 amount: null,
-                donor: null
+                donor: null,
             },
-            customAmount: false
+            customAmount: false,
         };
     },
     methods: {
@@ -96,8 +96,8 @@ export default {
             this.$nextTick(() => {
                 this.$refs.customAmount.focus();
             });
-        }
-    }
+        },
+    },
 };
 </script>
 

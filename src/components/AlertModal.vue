@@ -22,13 +22,13 @@ export default {
     name: 'alertModal',
     props: {
         message: String,
-        active: Boolean
+        active: Boolean,
     },
     methods: {
         closeModal() {
             this.$emit('close');
-        }
-    }
+        },
+    },
 };
 </script>
 

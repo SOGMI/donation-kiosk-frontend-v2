@@ -1,7 +1,7 @@
 module.exports = {
     env: {
         browser: true,
-        es6: true
+        es6: true,
     },
     root: true,
     extends: [
@@ -9,22 +9,22 @@ module.exports = {
         '@vue/prettier',
         '@vue/eslint-config-airbnb',
         'prettier/vue',
-        'prettier'
+        'prettier',
     ],
     globals: {
         Atomics: 'readonly',
-        SharedArrayBuffer: 'readonly'
+        SharedArrayBuffer: 'readonly',
     },
     parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
-        parser: 'babel-eslint'
+        parser: 'babel-eslint',
     },
     plugins: ['vue', 'prettier'],
     rules: {
         'no-console': 1,
-        'no-restricted-syntax': [1, 'for-in']
+        'no-restricted-syntax': [1, 'for-in'],
         // 'import/no-unresolved': 0
     },
-    settings: {}
+    settings: {},
 };

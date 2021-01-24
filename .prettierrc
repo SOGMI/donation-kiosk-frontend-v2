@@ -1,5 +1,6 @@
 {
     "tabWidth": 4,
     "tabs": true,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "es5"
 }

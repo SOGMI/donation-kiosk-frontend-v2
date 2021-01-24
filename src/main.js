@@ -11,7 +11,7 @@ import {
     faAddressBook,
     faEnvelope,
     faPhone,
-    faAddressCard
+    faAddressCard,
 } from '@fortawesome/free-solid-svg-icons';
 
 import App from './App.vue';
@@ -39,5 +39,5 @@ Vue.config.productionTip = false;
 new Vue({
     router,
     store,
-    render: h => h(App)
+    render: (h) => h(App),
 }).$mount('#app');

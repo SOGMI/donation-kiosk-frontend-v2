@@ -7,8 +7,8 @@ export default new Vuex.Store({
     state: {
         donation: {
             amount: null,
-            donor: null
-        }
+            donor: null,
+        },
     },
     mutations: {
         reset(state) {
@@ -29,7 +29,7 @@ export default new Vuex.Store({
         },
         setDonationAmount(state, amount) {
             state.donation.amount = amount;
-        }
+        },
     },
-    actions: {}
+    actions: {},
 });

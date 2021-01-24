@@ -65,7 +65,7 @@ export default {
     name: 'DonationConfirmation',
     components: {
         DonationNav,
-        LoadingScreen
+        LoadingScreen,
     },
     data() {
         return {
@@ -74,8 +74,8 @@ export default {
             donor: {
                 name: null,
                 phone: null,
-                email: null
-            }
+                email: null,
+            },
         };
     },
     mounted() {
@@ -86,13 +86,13 @@ export default {
                 this.donor = {
                     name: 'Anonymous',
                     phone: 'N/A',
-                    email: 'N/A'
+                    email: 'N/A',
                 };
             } else {
                 this.donor = {
                     name: `${donation.donor.given_name} ${donation.donor.family_name}`,
                     phone: donation.donor.phone_number,
-                    email: donation.donor.email_address
+                    email: donation.donor.email_address,
                 };
             }
         } else if (!donation.amount && !donation.donor) {
@@ -119,10 +119,12 @@ export default {
             const tenderTypes =
                 'com.squareup.pos.TENDER_CARD, com.squareup.pos.TENDER_CARD_ON_FILE';
             const posURL =
-                `${'intent:#Intent;' +
+                `${
+                    'intent:#Intent;' +
                     'action=com.squareup.pos.action.CHARGE;' +
                     'package=com.squareup;' +
-                    'S.com.squareup.pos.WEB_CALLBACK_URI='}${callbackUrl};` +
+                    'S.com.squareup.pos.WEB_CALLBACK_URI='
+                }${callbackUrl};` +
                 `S.com.squareup.pos.CLIENT_ID=${applicationId};` +
                 `S.com.squareup.pos.API_VERSION=${sdkVersion};` +
                 `i.com.squareup.pos.TOTAL_AMOUNT=${transactionTotal};` +
@@ -133,8 +135,8 @@ export default {
                 window.open(posURL);
             }, 600);
             // console.log(posURL);
-        }
-    }
+        },
+    },
 };
 </script>
 

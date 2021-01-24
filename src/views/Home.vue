@@ -20,13 +20,13 @@ import HomepageHeading from '@/components/HomepageHeading.vue';
 export default {
     name: 'home',
     components: {
-        HomepageHeading
+        HomepageHeading,
     },
     methods: {
         donateView() {
             this.$router.push('/donate/donation-amount');
-        }
-    }
+        },
+    },
 };
 </script>
 

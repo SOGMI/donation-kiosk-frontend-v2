@@ -15,27 +15,27 @@ export default new Router({
         {
             path: '/',
             name: 'Home',
-            component: Home
+            component: Home,
         },
         {
             path: '/donate/donation-amount',
             name: 'Donation Amount',
-            component: DonationAmount
+            component: DonationAmount,
         },
         {
             path: '/donate/donor-info',
             name: 'Donor Info',
-            component: DonorInfo
+            component: DonorInfo,
         },
         {
             path: '/donate/create-donor/:number',
             name: 'Create Donor',
-            component: CreateDonor
+            component: CreateDonor,
         },
         {
             path: '/donate/confirmation',
             name: 'Donation Confirmation',
-            component: DonationConfirmation
-        }
-    ]
+            component: DonationConfirmation,
+        },
+    ],
 });
